@@ -91,7 +91,7 @@ def get_connection():
 python main.py <command> [arguments]
 ```
 ### Available Commands
-#### ➕ Add an Expense
+#### Add an Expense
 ```bash
 python main.py add <amount> <category_id> <date> [--desc "description"]
 ```
