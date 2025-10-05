@@ -1,4 +1,4 @@
-# Personal Expense Tracker
+# FinTrack
 
 A command-line expense tracking application built with Python and PostgreSQL, focused on reliable data storage and efficient management of personal finances via a minimalist CLI interface.
 
