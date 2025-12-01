@@ -1,24 +1,27 @@
+"""
+Reporting module: Generates spending summaries using SQL aggregation.
+Key Pattern: GROUP BY with SUM for category-wise totals.
+"""
 from db import get_connection
 
+
 def monthly_report(year, month):
+    """
+    Generates top 3 expense categories for a given month.
+    Uses SQL aggregation (GROUP BY + SUM) for efficient calculation.
+    """
     conn = get_connection()
     cursor = conn.cursor()
     
-    # Calculate start and end dates for the month
-    # Note: This simple logic assumes valid months. 
-    # For a robust app, use calendar.monthrange, but we keep it simple.
+    # Calculate date range: first day of month to first day of next month
     start_date = f"{year}-{month:02d}-01"
     if month == 12:
-        end_date = f"{year+1}-01-01"
+        end_date = f"{year+1}-01-01"  # Wrap to next year
     else:
         end_date = f"{year}-{month+1:02d}-01"
-
-    # Query using basic SQL commands from the allowed list
-    # We use BETWEEN or >= AND < logic. 
-    # The user list has BETWEEN, <, >=. 
-    # "BETWEEN '2002-01-01' AND '2003-01-01'" is inclusive.
-    # To be precise with months, >= start AND < next_month_start is safer, 
-    # but BETWEEN is requested. Let's use >= AND < as it uses allowed symbols.
+    
+    # Aggregation query: SUM grouped by category, ordered by total spending
+    # Uses >= and < for precise month boundaries (excludes next month's first day)
     query = """
         SELECT c.name AS category, SUM(e.amount) AS total
         FROM expenses e
@@ -32,5 +35,5 @@ def monthly_report(year, month):
     cursor.close()
     conn.close()
     
-    # Return only top 3 (simulating LIMIT 3)
+    # Return top 3 categories (Python slicing instead of SQL LIMIT)
     return results[:3]
