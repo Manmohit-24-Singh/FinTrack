@@ -37,7 +37,7 @@ FinTrack is a lightweight, database-backed expense tracker that helps users reco
 
 ## 🛠️ Technology Stack
 
-- **Language**: Python 3.x
+- **Language**: Python 3.12
 - **Database**: PostgreSQL
 - **Libraries**: 
   - `psycopg2` - PostgreSQL adapter
